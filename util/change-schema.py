@@ -34,12 +34,14 @@ Options:
     0 : Quit
     1 : Add new subject
     2 : Remove a subject
+    3 : Modify a subject's total marks
+    4 : Show all subjects
 """
 )
 
 choice = int(input("Enter your choice: "))
 
-while not -1 < choice < 3:
+while not -1 < choice < 5:
     color_print(
         Fore.LIGHTRED_EX, "Wrong choice!! Please enter the right option again!!"
     )
@@ -93,7 +95,36 @@ elif choice == 2:
     else:
         color_print(Fore.LIGHTRED_EX, "Subject not present!! Terminating program...")
 
+elif choice == 3:
+    subname = input(
+        "Enter the subject name whose marks are to be edited(eg. Chemistry) : "
+    )
+    while not subname:
+        subname = input(
+            "Enter the subject name whose marks are to be edited(eg. Chemistry) : "
+        )
+    if subname in original_sub and config.has_option("totalMarks", subname):
+        new_total_marks = int(
+            input("Enter the total possible marks for the subject(eg. 80): ")
+        )
+        while not new_total_marks:
+            new_total_marks = int(
+                input("Enter the total possible marks for the subject(eg. 80): ")
+            )
+        config.set("totalMarks", subname, new_total_marks)
+        with open("./src/schema.ini", "w") as schemafile:
+            config.write(schemafile)
+            color_print(
+                Fore.LIGHTGREEN_EX,
+                f"Subject {subname} marks set to {new_total_marks} successfully",
+            )
+    else:
+        color_print(Fore.LIGHTRED_EX, "Subject not present!! Terminating program...")
 
+elif choice == 4:
+    color_print(Fore.LIGHTGREEN_EX, "List of all subjects: ")
+    for subname in original_sub:
+        print(f"{subname} : {config.getint('totalMarks', subname)}")
 else:
     # This block will never run
     pass
