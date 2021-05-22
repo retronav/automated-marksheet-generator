@@ -1,0 +1,7 @@
+# cc:
+#   - person1@example.com
+#   - person2@example.com
+smtp:
+  host: foo
+  port: 587
+  user: test@test.com

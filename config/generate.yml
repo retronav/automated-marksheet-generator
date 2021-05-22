@@ -1,0 +1,7 @@
+schoolName: The Public School, Hogwartz
+examName: Final Semester Exam
+authority:
+  name: Mr. Instructor
+  designation: Class Teacher
+  signatureFile: signature.png
+dataFile: data.csv

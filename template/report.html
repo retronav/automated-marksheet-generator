@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ student["Name"] }}'s Report card</title>
+  </head>
+  <body>
+    <h1>{{ schoolName }}</h1>
+    <hr />
+    <h2>{{ examName }}</h2>
+    <h3>Student Name : <u>{{ student["Name"] }}</u></h3>
+    {% if (student["RollNo"] | int) < 10 %}
+    <h3>Roll No : <u>0{{ student["RollNo"] }}</u></h3>
+    {% else %}
+    <h3>Roll No : <u>{{ student["RollNo"] }}</u></h3>
+    {% endif %}
+    <br />
+    <h3>Report:</h3>
+    <table>
+      <tr>
+        <th>Subject</th>
+        <th>Marks</th>
+      </tr>
+      {% for k,v in student["subjects"].items() %}
+      <tr>
+        <td>{{ k }}</td>
+        <td>{{ v }} / {{ maxMarks[k] }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <h3>
+      Total Marks Obtained = {{ student["total"] }} / {{ maxMarks["total"] }}
+    </h3>
+    <h3>Percentage = {{ student["percentage"] }}%</h3>
+
+    <!-- Example of including arbitary keys -->
+    {% if "Conduct" in student.keys() %}
+    <h3>Conduct : {{ student["Conduct"] }}</h3>
+    {% endif %}
+
+    <div class="authority">
+      {% if signatureFileURL != "" %}
+      <img
+        src="data:image/png;base64,{{ signatureFileURL }}"
+        alt="Signature file"
+      />
+      {% endif %}
+      <p>{{ authority["name"] }}</p>
+      <p>{{ authority["designation"] }}</p>
+    </div>
+    <!-- Styles to be applied -->
+    <style>
+      body {
+        text-align: center;
+        margin: 1em;
+        border: 2px solid black;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      }
+      table {
+        width: 50vw;
+        margin: 0 25vw;
+        font-size: 1.3em;
+      }
+      table td,
+      table th {
+        text-align: center;
+        width: 50%;
+      }
+      div.authority {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin: 0 3em 3em 0;
+      }
+    </style>
+  </body>
+</html>
