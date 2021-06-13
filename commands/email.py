@@ -31,6 +31,8 @@ def email(method):
 
     with open(email_info_file_path, "r") as file:
         email_info = json.load(file)
+        if len(email_info.keys()) == 0:
+            error("No emails found.", 1)
         file.close()
 
     with open(path.join(template_dir, "email.html"), "r") as file:
@@ -59,7 +61,7 @@ def email(method):
 def outlook_send(email_data, email_config, email_template):
     if sys.platform != "win32":
         error(
-            "you are attempting to use Outlook on a non-Windows system. Please use SMTP instead."
+            "you are attempting to use Outlook on a non-Windows system. Please use SMTP instead.", 1
         )
     else:
         import win32com.client as win32
